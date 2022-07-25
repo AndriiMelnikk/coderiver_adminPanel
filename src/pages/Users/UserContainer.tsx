@@ -3,17 +3,19 @@ import Users from './index';
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { Folders_api } from '../../api/users';
-import { setUsers, setProfile } from '../../redux/reducer/users';
+import { setUsers, setProfile, toggleLoader } from '../../redux/reducer/users';
 import { User } from '../../ts/users';
 
 function UserContainer() {
-    const { task, unresolvedTickets, blockNumber, usersTable, profile} = useAppSelector((state) => state.usersSlice);
+    const { task, unresolvedTickets, blockNumber, usersTable, profile, loaderTable} = useAppSelector((state) => state.usersSlice);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
     (async function() {
-       const users = await Folders_api.getUsers();
-       dispatch(setUsers(users));
+        dispatch(toggleLoader(true));
+        const users = await Folders_api.getUsers();
+        dispatch(setUsers(users));
+        dispatch(toggleLoader(false));
     })();
     }, []);
 
@@ -28,6 +30,7 @@ function UserContainer() {
          usersTable={usersTable}
          profile={profile}
          setProfile={infoProfile}
+         loaderTable={loaderTable}
          />);
 }
 

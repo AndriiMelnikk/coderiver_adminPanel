@@ -37,7 +37,8 @@ const initialState:UserState = {
           "name": '',
           "catchPhrase": '',
         }
-    }
+    },
+    loaderTable: true
 };
 
 export const usersSlice = createSlice({
@@ -49,10 +50,13 @@ export const usersSlice = createSlice({
         },
         setProfile:(state, action: PayloadAction<UserState['profile']>) => {
             state.profile = action.payload
+        },
+        toggleLoader:(state, action: PayloadAction<UserState['loaderTable']>) => {
+            state.loaderTable = action.payload
         }
     }
 });
 
-export const { setUsers, setProfile} = usersSlice.actions;
+export const { setUsers, setProfile, toggleLoader} = usersSlice.actions;
 
 export default usersSlice.reducer;

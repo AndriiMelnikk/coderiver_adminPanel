@@ -14,6 +14,7 @@ import Chip, { BackgroundChip } from '../../ui/chip';
 import { CheckBox } from '../../ui/input';
 import Profile from './Profile';
 import {Task, BlockNumber, User} from '../../ts/users'
+import Loader from '../../components/Loader';
 
 interface Props{
     task:Task[],
@@ -21,10 +22,11 @@ interface Props{
     unresolvedTickets:BlockNumber[],
     usersTable:User[],
     profile:User,
-    setProfile:(info:User)=> void
+    setProfile:(info:User)=> void,
+    loaderTable: boolean
 }
 
-const Users: FC<Props> = ({task, blockNumber, unresolvedTickets, usersTable, profile, setProfile}) =>  {
+const Users: FC<Props> = ({task, blockNumber, unresolvedTickets, usersTable, profile, setProfile, loaderTable}) =>  {
 
     return (
         <div>
@@ -33,7 +35,7 @@ const Users: FC<Props> = ({task, blockNumber, unresolvedTickets, usersTable, pro
             </div>
             <div className={style.usersContent}>
                 <Routes>
-                    <Route path='/'  element={<UsersContent usersTable={usersTable} task={task}  unresolvedTickets={unresolvedTickets} setProfile={setProfile}/>} />
+                    <Route path='/'  element={<UsersContent usersTable={usersTable} task={task}  loaderTable={loaderTable} unresolvedTickets={unresolvedTickets} setProfile={setProfile}/>} />
                     <Route path='/*' element={<Profile profile={profile}/>} />
                 </Routes>
             </div>
@@ -50,10 +52,11 @@ interface UsersContent_P{
     task:Task[],
     unresolvedTickets:BlockNumber[],
     usersTable:User[],
-    setProfile:(info:User)=> void
+    setProfile:(info:User)=> void,
+    loaderTable:boolean
 }
 
-const UsersContent:FC<UsersContent_P> =({task, usersTable , unresolvedTickets, setProfile})=>{
+const UsersContent:FC<UsersContent_P> =({task, usersTable , unresolvedTickets, setProfile, loaderTable})=>{
     const navigate = useNavigate();
     return(
         <>
@@ -62,7 +65,8 @@ const UsersContent:FC<UsersContent_P> =({task, usersTable , unresolvedTickets, s
                     name="All users"
                     rightContent={<><IconSort/><span>Sort</span></>}
                     rightClick={()=>{ alert('Sort')}}>
-                    <Table table={usersTable} clickTr={setProfile}/> 
+                    {loaderTable ?  <Loader/> : <Table table={usersTable} clickTr={setProfile}/> }
+                    
                 </OneBlock>  
             </div>
             <div className={style.viewDetails}>
