@@ -1,0 +1,49 @@
+@import '../../index.scss';
+
+.containerBlockNumber {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(254px, 1fr));
+    min-height: 134px;
+    gap: 30px;
+
+    .blockNumber {
+        background-color: $BACKGROUND;
+        border: 1px solid $BORDER_COLOR;
+        border-radius: $BORDER_RADIUS;
+        cursor: pointer;
+        transition: 0.2s;
+        padding: 24px 0;
+        text-align: center;
+
+        h5 {
+            font-weight: 700;
+            font-size: 19px;
+            line-height: 24px;
+            letter-spacing: 0.4px;
+            color: $GRAY;
+        }
+
+        h3 {
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 50px;
+            text-align: center;
+            letter-spacing: 1px;
+            color: $BASE_DARK_COLOR;
+        }
+
+        &:hover {
+
+            h3,
+            h5 {
+                color: $ACTIVE;
+            }
+
+            border-color: $ACTIVE;
+        }
+    }
+
+    @media (max-width: 568px) {
+        gap: 10px;
+    }
+}
